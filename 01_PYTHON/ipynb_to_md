@@ -1,5 +1,0 @@
-# pip을 통해 nbconvert 설치
-pip install nbconvert
-
-# 변환
-jupyter nbconvert --to markdown DAY01_python_소개와_환경설정.ipynb

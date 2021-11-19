@@ -1,0 +1,8 @@
+# pip을 통해 nbconvert 설치
+pip install nbconvert
+
+# 변환
+jupyter nbconvert --to markdown DAY01_python_소개와_환경설정.ipynb
+
+# 인터프리터 일치
+python -m ipykernel install --name lab_kernel
