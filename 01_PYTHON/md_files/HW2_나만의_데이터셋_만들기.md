@@ -55,9 +55,8 @@ movie | sentence | score
 1. 크롤링된 데이터를 저장한 `samples.csv`
 2. 크롤링 코드
 
+### 제출 코드
 
-
-## 제출 코드
 
 ```python
 import requests
@@ -66,40 +65,41 @@ import csv
 import time
 
 # open csv
-fd = open("../samples.csv", "w", encoding='utf-8')
+fd = open("samples.csv", "w", encoding='utf-8')
 writer = csv.writer(fd)
 writer.writerow(["movie", "sentence", "score"])
 
+
 print("크롤링 시작..")
 for idx in range(1, 150):
-   if idx % 10 == 0:
-      print(f"크롤링 중.. iter={idx}")
+    if idx % 10 == 0:
+            print(f"크롤링 중.. iter={idx}")
 
-   # DDOS 공격 의심을 피하기 위한 sleep
-   time.sleep(0.5)
+    # DDOS 공격 의심을 피하기 위한 sleep
+    time.sleep(0.5)
 
-   uri = f"https://movie.naver.com/movie/point/af/list.naver?&page={idx}"
+    uri = f"https://movie.naver.com/movie/point/af/list.naver?&page={idx}"
 
-   gain = requests.get(uri)
-   html = BeautifulSoup(gain.content, 'html.parser')
+    gain = requests.get(uri)
+    html = BeautifulSoup(gain.content, 'html.parser')
 
-   # 유의미한 내용이 담긴 content까지 접근
-   dep0 = html.find("tbody")
-   dep1 = dep0.findAll("tr")
-   for i in range(len(dep1)):
-      dep2 = dep1[i].find("td", {"class": "title"})
-      dep3 = dep2.text
+    # 유의미한 내용이 담긴 content까지 접근
+    dep0 = html.find("tbody")
+    dep1 = dep0.findAll("tr")
+    for i in range(len(dep1)):
+        dep2 = dep1[i].find("td", {"class": "title"})
+        dep3 = dep2.text
 
-      # parsing
-      content = dep3.split('\n')
-      movie_review = content[5]
-      if not movie_review: continue
+        # parsing
+        content = dep3.split('\n')
+        movie_review = content[5]
+        if not movie_review: continue
 
-      movie_title = content[1]
-      movie_score = int(content[3].split('중')[-1])
+        movie_title = content[1]
+        movie_score = int(content[3].split('중')[-1])
 
-      # to csv
-      writer.writerow([movie_title, movie_review, movie_score])
+        # to csv
+        writer.writerow([movie_title, movie_review, movie_score])
 
 print("완료!")
 fd.close()
@@ -148,9 +148,8 @@ fd.close()
 ### 과제를 제출하실때 다음을 제출해야합니다.
 1. `RawMoviewReview` 클래스가 정의된 코드 (`.py` 혹은 `.ipynb`)
 
+### 제출 코드
 
-
-## 제출 코드
 
 ```python
 import csv
@@ -195,23 +194,19 @@ if __name__ == "__main__":
 
 
     ---------------------------------------------------------------------------
-    
+
     TypeError                                 Traceback (most recent call last)
-    
+
     /var/folders/57/3hb2xgp11zd1zyhd1zv6q15r0000gn/T/ipykernel_32092/955970832.py in <module>
          32     print(f"dataset[0] = {dataset[0]}")
          33     print(f"len(dataset) = {len(dataset)}")
     ---> 34     dataset[1] = 1  # get an error
-
+    
 
     TypeError: 'RawMoviewReview' object does not support item assignment
 
 
-
-
-
 ## 2-3. 네이버 영화 학습 데이터 셋 제작 (30점)
-
 위에서 제작한 데이터 셋은 `CSV` 파일을 모두 조회하지만, 학습에 바로 사용되기에는 다소 불편합니다.
 따라서 이를 상속한 `MovieReview`를 만들어 봅시다. 
 
@@ -234,9 +229,8 @@ if __name__ == "__main__":
 ### 과제를 제출하실때 다음을 제출해야합니다.
 1. `MoviewReview` 클래스가 정의된 코드 (`.py` 혹은 `.ipynb`)
 
+### 제출 코드
 
-
-## 제출 코드
 
 ```python
 class MoviewReview(RawMoviewReview):
@@ -253,6 +247,9 @@ if __name__ == "__main__":
     dataset = MoviewReview(score_threshold=5)
     print(dataset[2])
 ```
+
+    ('배우들의 연기와 ost는 정말 좋았다.하지만 주인공의 감정선도 이해할 수 없었고,전체적으로 점점 영화가 지루해져갔다.최근 본 영화 중 가장 최악...', False)
+
 
 ## 최종 제출
 * 모든 파일을 `zip`으로 압축하여 `HW2_<한글 이름>.zip` 형태로 제출합니다.
