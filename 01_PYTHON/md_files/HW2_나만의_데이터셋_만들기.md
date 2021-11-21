@@ -57,7 +57,7 @@ movie | sentence | score
 
 
 
-### 제출 코드
+## 제출 코드
 
 ```python
 import requests
@@ -72,34 +72,34 @@ writer.writerow(["movie", "sentence", "score"])
 
 print("크롤링 시작..")
 for idx in range(1, 150):
-    if idx % 10 == 0:
-        print(f"크롤링 중.. iter={idx}")
+   if idx % 10 == 0:
+      print(f"크롤링 중.. iter={idx}")
 
-    # DDOS 공격 의심을 피하기 위한 sleep
-    time.sleep(0.5)
+   # DDOS 공격 의심을 피하기 위한 sleep
+   time.sleep(0.5)
 
-    uri = f"https://movie.naver.com/movie/point/af/list.naver?&page={idx}"
+   uri = f"https://movie.naver.com/movie/point/af/list.naver?&page={idx}"
 
-    gain = requests.get(uri)
-    html = BeautifulSoup(gain.content, 'html.parser')
+   gain = requests.get(uri)
+   html = BeautifulSoup(gain.content, 'html.parser')
 
-    # 유의미한 내용이 담긴 content까지 접근
-    dep0 = html.find("tbody")
-    dep1 = dep0.findAll("tr")
-    for i in range(len(dep1)):
-        dep2 = dep1[i].find("td", {"class": "title"})
-        dep3 = dep2.text
+   # 유의미한 내용이 담긴 content까지 접근
+   dep0 = html.find("tbody")
+   dep1 = dep0.findAll("tr")
+   for i in range(len(dep1)):
+      dep2 = dep1[i].find("td", {"class": "title"})
+      dep3 = dep2.text
 
-        # parsing
-        content = dep3.split('\n')
-        movie_review = content[5]
-        if not movie_review: continue
+      # parsing
+      content = dep3.split('\n')
+      movie_review = content[5]
+      if not movie_review: continue
 
-        movie_title = content[1]
-        movie_score = int(content[3].split('중')[-1])
+      movie_title = content[1]
+      movie_score = int(content[3].split('중')[-1])
 
-        # to csv
-        writer.writerow([movie_title, movie_review, movie_score])
+      # to csv
+      writer.writerow([movie_title, movie_review, movie_score])
 
 print("완료!")
 fd.close()
@@ -123,11 +123,7 @@ fd.close()
     완료!
 
 
-
-
-
 ## 2-2. 네이버 영화 데이터 셋 제작 (30점)
-
 `CSV` 파일로 저장된 데이터를 쉽게 접근하기 위해서는 파이썬 내에서 구조화할 필요가 있습니다.
 이를 위하여 데이터에 접근 가능한 `RawMovieReview` 클래스를 만들어 봅시다.
 
@@ -154,7 +150,7 @@ fd.close()
 
 
 
-### 제출 코드
+## 제출 코드
 
 ```python
 import csv
@@ -193,8 +189,8 @@ if __name__ == "__main__":
     dataset[1] = 1  # get an error
 ```
 
-    dataset[0] = MovieInfo(title='007 노 타임 투 다이', comment='나의 마지막 제임스본드 크레이그 굿바이. ', score=8)
-    len(dataset) = 1405
+    dataset[0] = MovieInfo(title='디어 에반 핸슨', comment='이미 뮤지컬을 알고 넘버들을 좋아한 사람으로 개인적으로 영화를 보고 난 후유증이 컸습니다. 같이 본 제 친구들은 아쉬웠다고 하지만 저는 주인공의 상황과 감정에 너무 공감이 가서 계속 생각이 나네요. 하지만 원작과 내용을 모르고 보는 분들에게는 확실히 내용의 찝찝함? 아쉬움이 남을거라 생각이 들긴해요. 저 혼자 조용히 인생영화에 포함되는 거 같아 아쉽지만 위로를 바라시는 분들은 한 번은 봐보라고 하고싶네요. ', score=10)
+    len(dataset) = 1398
 
 
 
@@ -240,7 +236,7 @@ if __name__ == "__main__":
 
 
 
-### 제출 코드
+## 제출 코드
 
 ```python
 class MoviewReview(RawMoviewReview):
@@ -257,9 +253,6 @@ if __name__ == "__main__":
     dataset = MoviewReview(score_threshold=5)
     print(dataset[2])
 ```
-
-    ('마블 역사상 최악의 영화를 찾았다. 스토리, 개연성 등 기본을 망각한 채 중국 끼워팔기에 치중한 결과물.', False)
-
 
 ## 최종 제출
 * 모든 파일을 `zip`으로 압축하여 `HW2_<한글 이름>.zip` 형태로 제출합니다.
