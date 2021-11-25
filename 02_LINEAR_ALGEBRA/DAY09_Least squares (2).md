@@ -24,11 +24,23 @@
 ## Gram-Schmit orthogonalization
 
 - span{col(A)} = span{col(U)}인 orthonormal basis를 가지는 U가 존재한다.
+
 - 이를 바꿔주는 방법이 Gram-Schmit
-- 꽤 간단한 알고리즘 과정이다. (normalization 생략)
-  - v2 => {v1}에 수선의 발 v2' => v2 - v2' 해서 {u1}에 수직인 방향 구함 => u2 구함
-  - v3 => {v1, v2}에 수선의 발 v3' => v3 - v3' 해서 {u1, u2}에 수직인 방향 구함 => u3 구함
-  - (반복)
+
+- 꽤 간단한 알고리즘 과정이다. 
+  
+  ```python
+  v1 = x1
+  u1 = v1 / np.linalg.norm(v1)
+  
+  v2 = x2 - np.inner(x2, u1)*u1
+  u2 = v2 / np.linalg.norm(v2)
+  
+  v3 = x3 - np.inner(v3, u1)*u1 - np.inner(x3, u2)*u2
+  u3 = v3 / np.linalg.norm(v3)
+  ```
+  
+  
 
 ## QR factorization
 
