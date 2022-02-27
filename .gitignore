@@ -11,7 +11,9 @@
 
 # IPython
 profile_default/
+myvenv/
 ipython_config.py
+test.py
 
 # Remove previous ipynb_checkpoints
 #   git rm -r .ipynb_checkpoints/
